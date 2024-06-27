@@ -26,7 +26,7 @@ const ProductList = ({ onAddToCart, searchQuery, selectedCategory, onProductClic
   const [sortOrder, setSortOrder] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/products')
+    axios.get('http://lipatibe.vercel.app/products')
       .then(response => {
         setProductList(response.data);
       })
@@ -37,7 +37,7 @@ const ProductList = ({ onAddToCart, searchQuery, selectedCategory, onProductClic
 
   useEffect(() => {
     if (selectedCategory === 'All') {
-      axios.get('http://localhost:5000/products')
+      axios.get('http://lipatibe.vercel.app/products')
         .then(response => {
           setProductList(response.data);
         })
@@ -45,7 +45,7 @@ const ProductList = ({ onAddToCart, searchQuery, selectedCategory, onProductClic
           console.error("There was an error fetching the products!", error);
         });
     } else {
-      axios.get('http://localhost:5000/products')
+      axios.get('http://lipatibe.vercel.app/products')
         .then(response => {
           setProductList(response.data.filter(product => product.category === selectedCategory));
         })
