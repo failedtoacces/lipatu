@@ -31,11 +31,11 @@ const ProductDetail = ({ product, onAddToCart }) => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', position: 'relative' }}>
-      <Card sx={{ display: 'flex', backgroundColor: '#1d1d1d', color: '#fff', p: 2, position: 'relative' }}>
+    <Container maxWidth="md" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', position: 'relative', mt: { xs: 2, md: 4 } }}>
+      <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, backgroundColor: '#1d1d1d', color: '#fff', p: 2, position: 'relative' }}>
         <CardMedia
           component="img"
-          sx={{ width: '50%' }}
+          sx={{ width: { xs: '100%', md: '50%' } }}
           image={product.image}
           alt={product.name}
         />

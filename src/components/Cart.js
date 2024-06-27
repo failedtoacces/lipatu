@@ -26,8 +26,8 @@ const Cart = ({ cartItems, onRemove, onDelete, onIncrement, onDecrement }) => {
       ) : (
         <List>
           {cartItems.map((item) => (
-            <ListItem key={item.id}>
-              <CartItem>
+            <ListItem key={item.id} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
+              <CartItem sx={{ width: '100%' }}>
                 <img src={item.image} alt={item.name} style={{ width: '50px', marginRight: '10px' }} />
                 <ListItemText
                   primary={item.name}

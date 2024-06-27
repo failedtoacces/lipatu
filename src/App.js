@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ThemeProvider, CssBaseline, Container, Dialog, DialogTitle, DialogContent, IconButton, Badge } from '@mui/material';
+import { ThemeProvider, CssBaseline, Container, Dialog, DialogTitle, DialogContent, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import NavBar from './components/NavBar';
 import ProductList from './components/ProductList';
@@ -14,19 +14,17 @@ const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product
-  const [detailOpen, setDetailOpen] = useState(false); // State for dialog visibility
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [detailOpen, setDetailOpen] = useState(false);
 
   const handleAddToCart = (product) => {
     setCartItems((prevItems) => {
       const isItemInCart = prevItems.find((item) => item.id === product.id);
-
       if (isItemInCart) {
         return prevItems.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       }
-
       return [...prevItems, { ...product, quantity: 1 }];
     });
   };
@@ -69,8 +67,7 @@ const App = () => {
     );
   };
 
-  const getTotalItems = (items) =>
-    items.reduce((ack, item) => ack + item.quantity, 0);
+  const getTotalItems = (items) => items.reduce((ack, item) => ack + item.quantity, 0);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -92,7 +89,7 @@ const App = () => {
           setSearchQuery={setSearchQuery}
           setCategory={setSelectedCategory} 
         />
-        <Container style={{ marginTop: '20px' }}>
+        <Container sx={{ mt: { xs: 2, md: 4 } }}>
           {!searchQuery && <Carousel />}
           <Routes>
             <Route path="/" element={<ProductList onAddToCart={handleAddToCart} searchQuery={searchQuery} selectedCategory={selectedCategory} onProductClick={handleProductClick} />} />

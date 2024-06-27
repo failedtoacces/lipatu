@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -28,20 +27,20 @@ const products = [
     name: 'Adidas Samba',
     description: 'Samba',
     price: 25.00,
-    image: 'https://www.adidas.co.id/media/catalog/product/B/7/B75807_SL_eCom.jpg',
+    image: 'https://images.jdsports.id/i/jpl/jd_B75806_a?w=700&resmode=sharp&qlt=70&fmt=webp',
     category: 'Adidas',
     colors: ['Black', 'White'],
     sizes: ['38', '39', '40', '41', '42'],
   },
   {
     id: 3,
-    name: 'Acme Drawstring Bag',
-    description: 'Convenient drawstring bag for daily use',
+    name: 'Puma Palermo Sneakers',
+    description: 'Palermo Sneakers Unisex',
     price: 12.00,
-    image: 'https://via.placeholder.com/200',
+    image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_1350,h_1350/global/396463/10/sv01/fnd/IDN/fmt/png/Palermo-Sneakers-Unisex',
     category: 'Puma',
-    colors: ['Black', 'Gray'],
-    sizes: [], // No sizes for bags
+    colors: ['Black', 'Green'],
+    sizes: ['40', '41', '42'],
   },
   // Tambahkan produk lainnya sesuai kebutuhan
 ];
@@ -59,7 +58,6 @@ const StyledCard = styled(Card)(({ theme }) => ({
 const ProductList = ({ onAddToCart, searchQuery, selectedCategory, onProductClick }) => {
   const [productList, setProductList] = useState(products);
   const [sortOrder, setSortOrder] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedCategory === 'All') {
@@ -87,9 +85,9 @@ const ProductList = ({ onAddToCart, searchQuery, selectedCategory, onProductClic
   );
 
   return (
-    <Box display="flex" bgcolor="#121212" color="#fff" marginTop={8}>
+    <Box display="flex" bgcolor="#121212" color="#fff" mt={{ xs: 2, md: 4 }}>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={2}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <FormControl variant="outlined" sx={{ minWidth: 200 }}>
             <InputLabel>Sort by</InputLabel>
             <Select value={sortOrder} onChange={handleSortChange} label="Sort by">

@@ -63,7 +63,7 @@ const NavBar = ({ setCartOpen, getTotalItems, setSearchQuery, setCategory }) => 
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#1a1a1a' }}>
+    <AppBar position="static" sx={{ backgroundColor: '#1a1a1a' }}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
           <MenuIcon />
