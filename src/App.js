@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ThemeProvider, CssBaseline, Container, Dialog, DialogTitle, DialogContent, IconButton } from '@mui/material';
+import { ThemeProvider, CssBaseline, Container, Dialog, DialogTitle, DialogContent, IconButton, Snackbar, Alert } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import NavBar from './components/NavBar';
 import ProductList from './components/ProductList';
@@ -16,6 +16,7 @@ const App = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false); // State untuk Snackbar
 
   const handleAddToCart = (product) => {
     setCartItems((prevItems) => {
@@ -27,6 +28,11 @@ const App = () => {
       }
       return [...prevItems, { ...product, quantity: 1 }];
     });
+    setSnackbarOpen(true); // Tampilkan Snackbar saat produk ditambahkan ke keranjang
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   const handleRemoveFromCart = (productId) => {
@@ -144,6 +150,16 @@ const App = () => {
           </>
         )}
       </Dialog>
+      <Snackbar 
+        open={snackbarOpen} 
+        autoHideDuration={3000} 
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+          Product added to cart!
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 };

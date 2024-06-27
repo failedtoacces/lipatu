@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -11,41 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
-const products = [
-  {
-    id: 1,
-    name: 'Nike Air Jordan 1',
-    description: 'Nike Air Jordan 1',
-    price: 45.00,
-    image: 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245/c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/24750e81-85ed-4b0e-8cd8-becf0cd97b2f/air-jordan-1-mid-shoes-7cdjgS.png',
-    category: 'Nike',
-    colors: ['Black', 'White', 'Blue'],
-    sizes: ['40', '41', '42', '43'],
-  },
-  {
-    id: 2,
-    name: 'Adidas Samba',
-    description: 'Samba',
-    price: 25.00,
-    image: 'https://images.jdsports.id/i/jpl/jd_B75806_a?w=700&resmode=sharp&qlt=70&fmt=webp',
-    category: 'Adidas',
-    colors: ['Black', 'White'],
-    sizes: ['38', '39', '40', '41', '42'],
-  },
-  {
-    id: 3,
-    name: 'Puma Palermo Sneakers',
-    description: 'Palermo Sneakers Unisex',
-    price: 12.00,
-    image: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_1350,h_1350/global/396463/10/sv01/fnd/IDN/fmt/png/Palermo-Sneakers-Unisex',
-    category: 'Puma',
-    colors: ['Black', 'Green'],
-    sizes: ['40', '41', '42'],
-  },
-  // Tambahkan produk lainnya sesuai kebutuhan
-];
-
-
 const StyledCard = styled(Card)(({ theme }) => ({
   cursor: 'pointer',
   '&:hover': {
@@ -56,14 +22,36 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 const ProductList = ({ onAddToCart, searchQuery, selectedCategory, onProductClick }) => {
-  const [productList, setProductList] = useState(products);
+  const [productList, setProductList] = useState([]);
   const [sortOrder, setSortOrder] = useState('');
 
   useEffect(() => {
+    axios.get('http://localhost:5000/products')
+      .then(response => {
+        setProductList(response.data);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the products!", error);
+      });
+  }, []);
+
+  useEffect(() => {
     if (selectedCategory === 'All') {
-      setProductList(products);
+      axios.get('http://localhost:5000/products')
+        .then(response => {
+          setProductList(response.data);
+        })
+        .catch(error => {
+          console.error("There was an error fetching the products!", error);
+        });
     } else {
-      setProductList(products.filter(product => product.category === selectedCategory));
+      axios.get('http://localhost:5000/products')
+        .then(response => {
+          setProductList(response.data.filter(product => product.category === selectedCategory));
+        })
+        .catch(error => {
+          console.error("There was an error fetching the products!", error);
+        });
     }
   }, [selectedCategory]);
 
@@ -71,7 +59,7 @@ const ProductList = ({ onAddToCart, searchQuery, selectedCategory, onProductClic
     const order = event.target.value;
     setSortOrder(order);
 
-    let sortedList = [...products];
+    let sortedList = [...productList];
     if (order === 'price-asc') {
       sortedList.sort((a, b) => a.price - b.price);
     } else if (order === 'price-desc') {
